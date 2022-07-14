@@ -1,67 +1,93 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ListItem from "../components/ListItem";
+import AuthContext from "../context/AuthContext";
 
-let arr = [
-  {
-    title: "第56回法政大学工学部定期演奏会",
-    body:
-      "こんにちは、法政大学工学部マンドリンクラブは、第56回法政大学工学部マンドリンクラブであり、法政大学工学部マンドリンクラブである。",
-    user: "HTMC",
-    sheets: "15",
-    cash: "1200",
-    img: "https://pbs.twimg.com/media/FGGnSVQVQAQztYj?format=jpg&name=medium",
-    loc: "宮地楽器ホール",
-    date: "7/5",
-    id: 1,
-  },
-  {
-    title: "第56回法政大学工学部定期演奏会",
-    body:
-      "こんにちは、法政大学工学部マンドリンクラブは、第56回法政大学工学部マンドリンクラブであり、法政大学工学部マンドリンクラブである。",
-    user: "HTMC",
-    sheets: "15",
-    cash: "1200",
-    img: "https://pbs.twimg.com/media/ELgZuIxU0AEATgM?format=jpg&name=900x900",
-    loc: "宮地楽器ホール",
-    date: "7/5",
-    id: 1,
-  },
-  {
-    title: "第56回法政大学工学部定期演奏会",
-    body:
-      "こんにちは、法政大学工学部マンドリンクラブは、第56回法政大学工学部マンドリンクラブであり、法政大学工学部マンドリンクラブである。",
-    user: "HTMC",
-    sheets: "15",
-    cash: "1200",
-    img: "https://pbs.twimg.com/media/EoUAWAbU0AYRZd2?format=jpg&name=medium",
-    loc: "宮地楽器ホール",
-    date: "7/5",
-    id: 1,
-  },
-];
+// let arr = [
+//     {
+//         title: "第56回法政大学工学部定期演奏会",
+//         body:
+//             "こんにちは、法政大学工学部マンドリンクラブは、第56回法政大学工学部マンドリンクラブであり、法政大学工学部マンドリンクラブである。",
+//         user: "HTMC",
+//         sheets: "15",
+//         cash: "1200",
+//         img:
+//             "https://pbs.twimg.com/media/FGGnSVQVQAQztYj?format=jpg&name=medium",
+//         loc: "宮地楽器ホール",
+//         date: "7/5",
+//         id: 1,
+//     },
+//     {
+//         title: "第56回法政大学工学部定期演奏会",
+//         body:
+//             "こんにちは、法政大学工学部マンドリンクラブは、第56回法政大学工学部マンドリンクラブであり、法政大学工学部マンドリンクラブである。",
+//         user: "HTMC",
+//         sheets: "15",
+//         cash: "1200",
+//         img:
+//             "https://pbs.twimg.com/media/ELgZuIxU0AEATgM?format=jpg&name=900x900",
+//         loc: "宮地楽器ホール",
+//         date: "7/5",
+//         id: 1,
+//     },
+//     {
+//         title: "第56回法政大学工学部定期演奏会",
+//         body:
+//             "こんにちは、法政大学工学部マンドリンクラブは、第56回法政大学工学部マンドリンクラブであり、法政大学工学部マンドリンクラブである。",
+//         user: "HTMC",
+//         sheets: "15",
+//         cash: "1200",
+//         img:
+//             "https://pbs.twimg.com/media/EoUAWAbU0AYRZd2?format=jpg&name=medium",
+//         loc: "宮地楽器ホール",
+//         date: "7/5",
+//         id: 1,
+//     },
+// ];
 
 const EventListPage = () => {
-  return (
-    <div className="pt-13">
-      <div className=" relative bg-slate-900">
-        <div className="bg-slate-500">
-          <img
-            className="   w-250 md:w-2/3  h-250   object-cover "
-            src="https://img.freepik.com/free-psd/boarding-pass-or-ticket-mockup-with-shadow-overlay_173864-513.jpg?w=1380"
-          />
-        </div>
-        <button class=" bg-white px-5 py-3 text-center font-medium  rounded-lg text-gray-600 text-4xl absolute bottom-1/4 right-1/4 shadow-md  hover:shadow-2xl">
-          無料会員登録
-        </button>
-      </div>
+    const [events, setEvents] = useState([]);
+    let { authTokens, logoutUser } = useContext(AuthContext);
+    useEffect(() => {
+        getEvents();
+    }, []);
 
-      <div>
-        {arr.map((data) => (
-          <ListItem data={data} />
-        ))}
-      </div>
-    </div>
-  );
+    const getEvents = async () => {
+        let response = await fetch("http://127.0.0.1:8000/api/events/", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + String(authTokens.access),
+            },
+        });
+        let data = await response.json();
+        if (response.status === 200) {
+            setEvents(data);
+        } else if (response.statusText === "Unauthorized") {
+            logoutUser();
+        }
+    };
+
+    return (
+        <div className="pt-13">
+            <div className=" relative bg-slate-900">
+                <div className="bg-slate-500">
+                    <img
+                        className="   w-250 md:w-2/3  h-250   object-cover "
+                        src="https://img.freepik.com/free-psd/boarding-pass-or-ticket-mockup-with-shadow-overlay_173864-513.jpg?w=1380"
+                    />
+                </div>
+                <button className=" bg-white px-5 py-3 text-center font-medium  rounded-lg text-gray-600 text-4xl absolute bottom-1/4 right-1/4 shadow-md  hover:shadow-2xl">
+                    無料会員登録
+                </button>
+            </div>
+
+            <div>
+                {events.map((data) => (
+                    <ListItem data={data} />
+                ))}
+            </div>
+        </div>
+    );
 };
 
 export default EventListPage;

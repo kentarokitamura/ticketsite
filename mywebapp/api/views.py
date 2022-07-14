@@ -49,6 +49,7 @@ def getEvents(request):
         serializer = EventSerializer(events, many=True)
         return Response(serializer.data)
     if request.method == 'PUT':
+        print(data)
         data = request.data
         event = Event.objects.get_or_create(
             title=data['title'],
