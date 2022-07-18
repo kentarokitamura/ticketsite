@@ -1,7 +1,8 @@
+from dataclasses import field
 from rest_framework.serializers import ModelSerializer, EmailField, CharField
 from rest_framework.validators import UniqueValidator
 
-from base.models import Event
+from base.models import Event, Seat
 from django.contrib.auth.models import User
 
 
@@ -9,6 +10,12 @@ from django.contrib.auth.models import User
 class EventSerializer(ModelSerializer):
     class Meta:
         model =  Event
+        fields = '__all__'
+
+
+class SeatSerializer(ModelSerializer):
+    class Meta:
+        model = Seat
         fields = '__all__'
 
 class UserSerializer(ModelSerializer):

@@ -6,6 +6,7 @@ const EventPage = ({ id }) => {
     const params = useParams();
     const { authTokens } = useContext(AuthContext);
     const [event, setEvent] = useState(null);
+    const [seat, setSeat] = useState(null);
     const navigate = useNavigate();
     const eventId = params.id;
     let getEvent = async () => {
@@ -18,12 +19,32 @@ const EventPage = ({ id }) => {
         );
         let data = await response.json();
         setEvent(data);
+        console.log(data);
     };
+
+    let getSeat = async () => {
+        if (eventId === "new") return;
+        let response = await fetch(
+            `http://127.0.0.1:8000/api/seat/${eventId}`,
+            {
+                method: "GET",
+            }
+        );
+        let data = await response.json();
+        setSeat(data);
+        console.log(data);
+    };
+
     useEffect(() => {
         getEvent();
+        getSeat();
     }, [eventId]);
     let buyTicket = async (e) => {
         e.preventDefault();
+        let id = e.target.getAttribute("value");
+
+        let targetSeat = seat[id];
+
         let response = await fetch(`http://127.0.0.1:8000/api/buy/${eventId}`, {
             method: "PUT",
             headers: {
@@ -33,6 +54,8 @@ const EventPage = ({ id }) => {
             body: JSON.stringify({
                 schedule: event.schedule,
                 sheet: event.sheet - 1,
+                ...targetSeat,
+                seat_status: "BOOKED",
             }),
         });
         let data = await response.json();
@@ -53,6 +76,30 @@ const EventPage = ({ id }) => {
                     <p>{event.sheet}席</p>
 
                     <button onClick={buyTicket}>buy</button>
+
+                    {seat ? (
+                        <div className=" grid grid-cols-12 gap-4 p-8">
+                            {seat.map((s, i) => (
+                                <div
+                                    onClick={
+                                        s.seat_status === "BOOKED"
+                                            ? null
+                                            : buyTicket
+                                    }
+                                    className={`  h-10 w-20 rounded-lg shadow-sm text-center text-2xl text-bold   ${
+                                        s.seat_status === "Confirmed"
+                                            ? "bg-orange-300"
+                                            : "bg-slate-900"
+                                    }  `}
+                                    value={i}
+                                >
+                                    {s.seat_name}
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <>no seat info </>
+                    )}
                 </div>
             ) : (
                 <div>hello</div>

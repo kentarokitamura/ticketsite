@@ -42,6 +42,10 @@ const UserPage = () => {
                     </Link>
                 ))}
             </div>
+
+            <Link to={"/event/new"}>
+                <h1>create Event</h1>
+            </Link>
         </div>
     );
 };
