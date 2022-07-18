@@ -40,7 +40,21 @@ const Sidebar = () => {
             >
                 <h3 className="mt-20 text-4xl font-semibold text-gray-600">
                     {user ? (
-                        <p onClick={logout}>Logout</p>
+                        <div>
+                            <div>
+                                <p onClick={logout}>Logout</p>
+                            </div>
+                            <div>
+                                <Link
+                                    to="user"
+                                    onClick={() => {
+                                        setShowSidebar(!showSidebar);
+                                    }}
+                                >
+                                    Mypage
+                                </Link>
+                            </div>
+                        </div>
                     ) : (
                         <div>
                             <div>

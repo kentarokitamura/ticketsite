@@ -1,48 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import ListItem from "../components/ListItem";
 import AuthContext from "../context/AuthContext";
-
-// let arr = [
-//     {
-//         title: "第56回法政大学工学部定期演奏会",
-//         body:
-//             "こんにちは、法政大学工学部マンドリンクラブは、第56回法政大学工学部マンドリンクラブであり、法政大学工学部マンドリンクラブである。",
-//         user: "HTMC",
-//         sheets: "15",
-//         cash: "1200",
-//         img:
-//             "https://pbs.twimg.com/media/FGGnSVQVQAQztYj?format=jpg&name=medium",
-//         loc: "宮地楽器ホール",
-//         date: "7/5",
-//         id: 1,
-//     },
-//     {
-//         title: "第56回法政大学工学部定期演奏会",
-//         body:
-//             "こんにちは、法政大学工学部マンドリンクラブは、第56回法政大学工学部マンドリンクラブであり、法政大学工学部マンドリンクラブである。",
-//         user: "HTMC",
-//         sheets: "15",
-//         cash: "1200",
-//         img:
-//             "https://pbs.twimg.com/media/ELgZuIxU0AEATgM?format=jpg&name=900x900",
-//         loc: "宮地楽器ホール",
-//         date: "7/5",
-//         id: 1,
-//     },
-//     {
-//         title: "第56回法政大学工学部定期演奏会",
-//         body:
-//             "こんにちは、法政大学工学部マンドリンクラブは、第56回法政大学工学部マンドリンクラブであり、法政大学工学部マンドリンクラブである。",
-//         user: "HTMC",
-//         sheets: "15",
-//         cash: "1200",
-//         img:
-//             "https://pbs.twimg.com/media/EoUAWAbU0AYRZd2?format=jpg&name=medium",
-//         loc: "宮地楽器ホール",
-//         date: "7/5",
-//         id: 1,
-//     },
-// ];
+import FirstSection from "../sections/FirstSection";
+import SecondSection from "../sections/SecondSection";
 
 const EventListPage = () => {
     const [events, setEvents] = useState([]);
@@ -56,36 +16,18 @@ const EventListPage = () => {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: "Bearer " + String(authTokens.access),
             },
         });
         let data = await response.json();
         if (response.status === 200) {
             setEvents(data);
-        } else if (response.statusText === "Unauthorized") {
-            logoutUser();
         }
     };
 
     return (
-        <div className="pt-13">
-            <div className=" relative bg-slate-900">
-                <div className="bg-slate-500">
-                    <img
-                        className="   w-250 md:w-2/3  h-250   object-cover "
-                        src="https://img.freepik.com/free-psd/boarding-pass-or-ticket-mockup-with-shadow-overlay_173864-513.jpg?w=1380"
-                    />
-                </div>
-                <button className=" bg-white px-5 py-3 text-center font-medium  rounded-lg text-gray-600 text-4xl absolute bottom-1/4 right-1/4 shadow-md  hover:shadow-2xl">
-                    無料会員登録
-                </button>
-            </div>
-
-            <div>
-                {events.map((data) => (
-                    <ListItem data={data} />
-                ))}
-            </div>
+        <div className="pt-19">
+            <FirstSection data={events} />
+            <SecondSection data={events} />
         </div>
     );
 };

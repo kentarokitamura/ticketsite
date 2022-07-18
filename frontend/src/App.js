@@ -9,6 +9,8 @@ import LoginPage from "./pages/LoginPage";
 import PrivateRoute from "./utils/PrivateRoute";
 import { AuthProvider } from "./context/AuthContext";
 import SignupPage from "./pages/SignupPage";
+import UserPage from "./pages/UserPage";
+import EventEditPage from "./pages/EventEditPage";
 
 function App() {
     return (
@@ -17,16 +19,33 @@ function App() {
                 <AuthProvider>
                     <Header />
                     <Routes>
+                        <Route path="/" element={<EventListPage />} />
+                        <Route path="event/:id" element={<EventPage />} />
                         <Route
-                            path="/"
+                            path="event/new"
                             element={
                                 <PrivateRoute>
-                                    <EventListPage />
+                                    <CreateEventPage />
                                 </PrivateRoute>
                             }
                         />
-                        <Route path="event/:id" element={<EventPage />} />
-                        <Route path="event/new" element={<CreateEventPage />} />
+                        <Route
+                            path="user"
+                            element={
+                                <PrivateRoute>
+                                    <UserPage />
+                                </PrivateRoute>
+                            }
+                        />
+                        <Route
+                            path="user/edit/:id"
+                            element={
+                                <PrivateRoute>
+                                    <EventEditPage />
+                                </PrivateRoute>
+                            }
+                        />
+
                         <Route path="signup" element={<SignupPage />} />
                         <Route path="login" element={<LoginPage />} />
                     </Routes>
