@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import EventCard from "../components/EventCard";
 
 const SecondSection = ({ data }) => {
-    console.log(data);
     return (
         <div className="mb-13">
             <div></div>

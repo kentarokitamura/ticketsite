@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { FiMapPin, FiUser } from "react-icons/fi";
 
+
 const ListItem = ({ data }) => {
     const title = data.title;
     const body = data.body;
@@ -10,7 +11,7 @@ const ListItem = ({ data }) => {
     const cash = data.cash;
 
     const navigate = useNavigate();
-    console.log(data.schedule);
+
     return (
         <div
             className="relative h-screen py-48 bg-no-repeat bg-cover "

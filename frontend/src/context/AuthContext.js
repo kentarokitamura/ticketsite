@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }) => {
 
     let signupUser = async (e) => {
         e.preventDefault();
-        console.log(e.target.username.value);
+
         let response = await fetch("http://127.0.0.1:8000/api/signup/", {
             method: "POST",
             headers: {

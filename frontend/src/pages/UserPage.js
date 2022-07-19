@@ -27,7 +27,6 @@ const UserPage = () => {
         let data = await response.json();
         if (response.status === 200) {
             setEvents(data);
-            console.log(data);
         }
     };
 

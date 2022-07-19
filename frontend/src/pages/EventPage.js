@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
+import { MdEventSeat } from "react-icons/md";
 
 const EventPage = ({ id }) => {
     const params = useParams();
@@ -86,14 +87,17 @@ const EventPage = ({ id }) => {
                                             ? null
                                             : buyTicket
                                     }
-                                    className={`  h-10 w-20 rounded-lg shadow-sm text-center text-2xl text-bold   ${
+                                    className={`grid grid-cols-1 gap-1  rounded-lg shadow-sm text-center text-2xl text-bold   ${
                                         s.seat_status === "Confirmed"
-                                            ? "bg-orange-300"
-                                            : "bg-slate-900"
-                                    }  `}
+                                            ? "bg-white hover:bg-slate-200"
+                                            : "bg-slate-200"
+                                    }   `}
                                     value={i}
                                 >
-                                    {s.seat_name}
+                                    <div className=" flex justify-center">
+                                        <MdEventSeat className="  text-3xl m-1" />
+                                    </div>
+                                    <div>{s.seat_name}</div>
                                 </div>
                             ))}
                         </div>

@@ -4,10 +4,10 @@ import AuthContext from "../context/AuthContext";
 
 const EventEditPage = () => {
     const params = useParams();
-    console.log(params);
+
     const [event, setEvent] = useState(null);
     const eventId = params.id;
-    console.log(eventId);
+
     const { authTokens } = useContext(AuthContext);
     const navigate = useNavigate();
 
@@ -21,14 +21,13 @@ const EventEditPage = () => {
         );
         let data = await response.json();
         setEvent(data);
-        console.log(data);
     };
     useEffect(() => {
         getEvent();
     }, [eventId]);
     let sendEvent = async (e) => {
         e.preventDefault();
-        console.log(e.target.title);
+
         fetch(`http://127.0.0.1:8000/api/update/${params.id}`, {
             method: "PUT",
             headers: {

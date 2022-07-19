@@ -1,5 +1,5 @@
 from dataclasses import field
-from rest_framework.serializers import ModelSerializer, EmailField, CharField
+from rest_framework.serializers import ModelSerializer, EmailField, CharField, SerializerMethodField
 from rest_framework.validators import UniqueValidator
 
 from base.models import Event, Seat
@@ -11,6 +11,17 @@ class EventSerializer(ModelSerializer):
     class Meta:
         model =  Event
         fields = '__all__'
+
+
+class EventSeatSerializer(ModelSerializer):
+    event = SerializerMethodField()
+    seat = SerializerMethodField()
+    def get_seat(self,obj):
+        eventObj = EventSeatSerializer(instance=obj.event_id)
+        return eventObj.data
+    class Meta:
+        model = Event
+
 
 
 class SeatSerializer(ModelSerializer):
