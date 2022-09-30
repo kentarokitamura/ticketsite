@@ -1,15 +1,18 @@
-# setting
+# setting 
+`cd frontend` 
 
-### cd frontend 
+`npm install` 
 
-### npm install 
+`npm start` 
 
-### npm start
-### cd ../backend
-### env/script/activate
-### python manage.py runserver
+`cd ../backend` 
 
-### visit localhost:8000 and create your acount
+`env/script/activate` 
+
+`python manage.py runserver` 
+
+
+visit localhost:8000 and create your acount
 
 
 
